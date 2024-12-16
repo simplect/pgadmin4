@@ -1583,6 +1583,11 @@ Failed to reset the connection to the server due to following error:
         status = True
         msg = ''
 
+        # Release async cursor
+        if self.__async_cursor is not None:
+            self.__async_cursor.close()
+            self.__async_cursor = None
+        
         # if backend pid is same then create a new connection
         # to cancel the query and release it.
         if cancel_conn.__backend_pid == self.__backend_pid:
